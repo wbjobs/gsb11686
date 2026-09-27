@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>滤镜工作室</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>滤镜工作室</h1>
+    <div class="topbar-actions">
+      <label class="btn primary">
+        打开图片
+        <input type="file" id="fileInput" accept="image/*" hidden>
+      </label>
+      <button id="undoBtn" class="btn" disabled>撤销</button>
+      <button id="redoBtn" class="btn" disabled>重做</button>
+      <select id="formatSelect" class="btn">
+        <option value="image/png">PNG</option>
+        <option value="image/jpeg">JPEG</option>
+        <option value="image/webp">WebP</option>
+      </select>
+      <input id="qualityInput" type="range" min="0.1" max="1" step="0.05" value="0.92"
+             title="导出质量（JPEG/WebP）" class="quality">
+      <button id="exportBtn" class="btn primary" disabled>导出</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <section class="panel">
+        <h2>添加滤镜</h2>
+        <div id="palette" class="palette"></div>
+      </section>
+      <section class="panel grow">
+        <h2>滤镜链 <span class="hint">（自上而下依次应用）</span></h2>
+        <div id="chainList" class="chain-list"></div>
+        <p id="chainEmpty" class="empty">尚未添加滤镜</p>
+      </section>
+    </aside>
+
+    <main class="stage">
+      <div id="dropHint" class="drop-hint">打开或拖入一张图片开始</div>
+      <canvas id="previewCanvas"></canvas>
+    </main>
+  </div>
+
+  <footer class="statusbar">
+    <span id="statusInfo">就绪</span>
+    <span id="statusPerf"></span>
+    <span id="statusFallback" class="warn"></span>
+  </footer>
+
+  <script src="js/filters.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
