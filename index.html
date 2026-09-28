@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>图像滤镜工坊</title>
+    <link rel="stylesheet" href="src/styles.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <h1>图像滤镜工坊</h1>
+        <p id="imageInfo">打开图片以开始编辑</p>
+      </div>
+      <div class="header-actions">
+        <label class="button primary">
+          <input id="fileInput" type="file" accept="image/*" hidden>
+          打开图片
+        </label>
+        <button id="exportButton" class="button" disabled>导出</button>
+      </div>
+    </header>
+
+    <main class="app-shell">
+      <section class="preview-panel" aria-label="预览区">
+        <div id="dropZone" class="drop-zone">
+          <canvas id="previewCanvas" hidden></canvas>
+          <img id="cssPreview" alt="滤镜预览" hidden>
+          <div id="emptyState" class="empty-state">
+            <strong>拖放图片到这里</strong>
+            <span>或点击右上角“打开图片”</span>
+          </div>
+          <div id="renderBadge" class="render-badge" hidden></div>
+        </div>
+        <div id="notice" class="notice" role="status" hidden></div>
+      </section>
+
+      <aside class="sidebar" aria-label="滤镜链">
+        <div class="toolbar">
+          <button id="undoButton" disabled>撤销</button>
+          <button id="resetButton" disabled>重置</button>
+        </div>
+
+        <label class="add-filter">
+          添加滤镜
+          <select id="filterSelect">
+            <option value="grayscale">灰度</option>
+            <option value="invert">反色</option>
+            <option value="blur">模糊</option>
+            <option value="sharpen">锐化</option>
+            <option value="edges">边缘检测</option>
+            <option value="tone">色调映射</option>
+          </select>
+        </label>
+
+        <ol id="filterList" class="filter-list" aria-live="polite"></ol>
+
+        <details class="export-panel" open>
+          <summary>导出选项</summary>
+          <label>
+            格式
+            <select id="exportFormat">
+              <option value="image/png">PNG（保留透明）</option>
+              <option value="image/jpeg" selected>JPEG（体积更小）</option>
+              <option value="image/webp">WebP（如浏览器支持）</option>
+            </select>
+          </label>
+          <label id="qualityWrap">
+            质量 <span id="qualityValue">92%</span>
+            <input id="quality" type="range" min="0.5" max="1" step="0.01" value="0.92">
+          </label>
+          <label class="checkbox">
+            <input id="fullSize" type="checkbox">
+            尝试原始尺寸导出
+          </label>
+          <p id="exportHint" class="hint">大尺寸图片会自动限制在安全范围内。</p>
+        </details>
+      </aside>
+    </main>
+
+    <div id="exportOverlay" class="overlay" hidden>
+      <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="exportTitle">
+        <h2 id="exportTitle">正在导出</h2>
+        <progress id="exportProgress" indeterminate></progress>
+        <p id="exportStatus">正在处理像素，请稍候…</p>
+      </div>
+    </div>
+
+    <script type="module" src="src/app.js"></script>
+  </body>
+</html>
